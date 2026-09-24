@@ -2,9 +2,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const validator = require('validator')
 
-const Schema = mongoose.Schema()
-
-const userSchema = new Schema(
+const userSchema = new mongoose.Schema(
   {
       name: { type: String, required: true }, // Full name of the user
       email: { type: String, required: true, unique: true }, // Unique username for login
@@ -26,44 +24,48 @@ const REQUIRED_FIELDS = ['name', 'email', 'password']
 const User = mongoose.model("User", userSchema);
 
 
-const signupUser = async(data) => {
-    
-    //Validator
+const signupUser = async (data) => {
     const missing = REQUIRED_FIELDS.filter(field => !data[field]);
+    if (missing.length > 0) {
+        return { error: `Missing required fields: ${missing.join(', ')}` };
+    }
 
-    if (missing.length > 0) throw new Error("Something is missing")
-    
-    if(!validator.isEmail(email)) throw new Error("Enter correct email!")
+    const email = String(data.email).toLowerCase().trim() ;
 
-    if (!validator.isStrongPassword(password)) throw new Error("Ur password is to weak :(")
-
-    const existed_email = User.findOne({email})
-    if (existed_email) throw new Error("Email already existed")
+    //Check unique email before signing up
+    const exists = await User.findOne({ email });
+    if (exists) {
+        return {error: "Email existed!"}
+    }
 
     try {
-        const salt = bcrypt.genSalt(10)
-        const hashpwd = bcrypt.hash(data.password, salt)
-        
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(data.password, salt)
+
         const user = await User.create({
             name: data.name,
-            email: data.email,
-            password: hashpwd,
+            email: email,
+            password: hashedPassword,
             phone_number: data.phone_number,
             gender: data.gender,
             date_of_birth: data.date_of_birth,
             address: {
-                street: data.street,
-                city: data.city,
-                zipCode: data.zipCode
+                street: data.address?.street,
+                city: data.address?.city,
+                zipCode: data.address?.zipCode
             }
 
         })
         return user;
-
+        
     } catch (err) {
-        console.error(err)
+        if (err.code === 11000) {
+            const field = Object.keys(err.keyPattern)[0];
+            return { error: `${field} already in use` };
+        }
+        return { error: err.message };
     }
-}
+};
 
 const loginUser = async(email, password) => {
     
@@ -81,7 +83,8 @@ const loginUser = async(email, password) => {
     
 }
 
-export {
-    signupUser,
-    loginUser
+// module.exports = mongoose.model("User", userSchema);
+module.exports = {
+  signupUser,
+  loginUser
 }

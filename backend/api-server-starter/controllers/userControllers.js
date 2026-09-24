@@ -1,4 +1,5 @@
-import { signupUser, loginUser } from "../models/userModel";
+// import { signupUser, loginUser } from "../models/userModel";
+const {signupUser, loginUser} = require("../models/userModel")
 
 const signup = async(req, res) => {
     
@@ -16,7 +17,7 @@ const signup = async(req, res) => {
 const login = async(req,res) => {
     const data = req.body;
 
-    const email = data.email.lowercase().trim();
+    const email = String(data.email).toLowerCase().trim() ;
     const password = data.password
     if (!email || !password){
         res.status(500).json({error: user.error});
@@ -30,7 +31,7 @@ const login = async(req,res) => {
     }
 };
 
-export default {
+module.exports = {
     signup,
     login
 }

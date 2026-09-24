@@ -1,6 +1,6 @@
-import { login, signup} from "../controllers/userControllers"
-// const {signup, login} = require("../controllers/userControllers")
-import express from "express"
+// import { login, signup} from "../controllers/userControllers"
+const {signup, login} = require("../controllers/userControllers")
+const express = require("express")
 
 const UserRouter = express.Router()
 
