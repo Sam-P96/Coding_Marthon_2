@@ -16,10 +16,10 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    const user =JSON.parse(localStorage.getItem("user"));
-    return user && user.token ? true : false;
-  });
+  // const [isAuthenticated, setIsAuthenticated] = useState(() => {
+  //   const user =JSON.parse(localStorage.getItem("user"));
+  //   return user && user.token ? true : false;
+  // });
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -29,10 +29,8 @@ const App = () => {
         <Route path="/add-job" element={<AddJobPage />} />
         <Route path="/edit-job/:id" element={<EditJobPage />} />
         <Route path="/jobs/:id" element={<JobPage />} />
-        <Route path="/login" element={<LoginPage 
-        setIsAuthenticated={setIsAuthenticated}/>} />
-        <Route path="/signup" element={<SignupPage
-          setIsAuthenticated = {setIsAuthenticated} />} />
+        <Route path="/login" element={<LoginPage/>} />
+        <Route path="/signup" element={<SignupPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     )
