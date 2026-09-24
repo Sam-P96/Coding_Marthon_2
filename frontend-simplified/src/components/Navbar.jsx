@@ -1,15 +1,27 @@
 import { NavLink } from "react-router-dom";
 import logo from "../assets/images/logo.png";
+import { useState } from "react";
 
-const Navbar = (isAuthenticated, setIsAuthenticated) => {
+const Navbar = ({isAuthenticated, setIsAuthenticated}) => {
+  
   const linkClass = ({ isActive }) =>
     isActive
       ? "bg-black text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
       : "text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2";
+  console.log(isAuthenticated);
 
   const handleClick = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem("user");
+    try {
+      localStorage.removeItem("user");
+      // console.log("cleared local stor");
+      // console.log(isAuthenticated);
+      // console.log(setIsAuthenticated);
+      
+      
+      setIsAuthenticated(false);
+    } catch (error) {
+      console.error("Error: ", error);
+    }
   };
 
   return (
@@ -28,22 +40,27 @@ const Navbar = (isAuthenticated, setIsAuthenticated) => {
                 <NavLink to="/" className={linkClass}>
                   Home
                 </NavLink>
-                <NavLink to="/jobs" className={linkClass}>
-                  Jobs
-                </NavLink>
-                <NavLink to="/add-job" className={linkClass}>
-                  Add Job
-                </NavLink>
-                {isAuthenticated && (
-                  <NavLink to="/login" className={linkClass}>
-                    Log In
-                  </NavLink>
+                {!isAuthenticated ? (
+                  <div>
+                    <NavLink to="/login" className={linkClass}>
+                      Log In
+                    </NavLink>
+                    <NavLink to="/signup" className={linkClass}>
+                      Sign Up
+                    </NavLink>
+                  </div>
+                ) : (
+                  <div>
+                    <NavLink to="/jobs" className={linkClass}>
+                      Jobs
+                    </NavLink>
+                    <NavLink to="/add-job" className={linkClass}>
+                      Add Job
+                    </NavLink>
+                    <button onClick={handleClick}>Log out</button>
+                  </div>
                 )}
-                {isAuthenticated && (
-                  <NavLink to="/signup" className={linkClass}>
-                    Sign Up
-                  </NavLink>
-                )}
+
                 {/* {!isAuthenticated && (
                   <NavLink to="/signup" className={linkClass}>
                     Sign Up

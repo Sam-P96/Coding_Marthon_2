@@ -20,9 +20,12 @@ import SignupPage from "./pages/SignupPage";
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user)
+    
     return user && user.token ? true : false;
   });
-
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(isAuthenticated)
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route
@@ -31,6 +34,7 @@ const App = () => {
           <MainLayout
             isAuthenticated={isAuthenticated}
             setIsAuthenticated={setIsAuthenticated}
+            user = {user}
           />
         }
       >
