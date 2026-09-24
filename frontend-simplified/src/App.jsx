@@ -16,10 +16,10 @@ import SignupPage from './pages/SignupPage';
 import { useState } from 'react';
 
 const App = () => {
-  // const [isAuthenticated, setIsAuthenticated] = useState(() => {
-  //   const user = JSON.parse(localStorage.getItem('user'));
-  //   return user && user.token ? true : false;
-  // });
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user && user.token ? true : false;
+  });
 
   const router = createBrowserRouter(
     createRoutesFromElements(
