@@ -6,16 +6,16 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
+import {useState} from 'react'
 import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
 import JobsPage from "./pages/JobsPage";
 import NotFoundPage from "./pages/NotFoundPage";
-import JobPage from "./pages/JobPage";
+import JobPage from "./pages/JobPage"; 
 import AddJobPage from "./pages/AddJobPage";
 import EditJobPage from "./pages/EditJobPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
-import { useState } from "react";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
