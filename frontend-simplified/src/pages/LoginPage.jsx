@@ -16,7 +16,7 @@ const LoginPage = ({ isAuthenticated, setIsAuthenticated }) => {
     e.preventDefault();
     setError(null);
 
-    const response = await fetch("/api/user/login", {
+    const response = await fetch("/api/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +24,7 @@ const LoginPage = ({ isAuthenticated, setIsAuthenticated }) => {
       body: JSON.stringify({ email, password }),
     });
   
-
+  const user = await response.json();
   if (!response.ok) {
     setError(user.error);
     return;

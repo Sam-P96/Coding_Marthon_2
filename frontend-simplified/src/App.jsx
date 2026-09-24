@@ -52,8 +52,12 @@ const App = () => {
           path="/jobs/:id"
           element={isAuthenticated ? <JobPage /> : <Navigate to={"/login"} />}
         />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/login" element={<LoginPage
+        isAuthenticated={isAuthenticated}
+            setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/signup" element={<SignupPage
+        isAuthenticated={isAuthenticated}
+            setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>,
     ),
