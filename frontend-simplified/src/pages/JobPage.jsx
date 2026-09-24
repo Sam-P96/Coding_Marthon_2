@@ -1,8 +1,8 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { FaArrowLeft, FaMapMarker } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useParams, useNavigate } from 'react-router-dom';
+import { FaArrowLeft, FaMapMarker } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
 
 const JobPage = () => {
   const navigate = useNavigate();
@@ -22,23 +22,26 @@ const JobPage = () => {
   const deleteJob = async (id) => {
     try {
       const res = await fetch(`/api/jobs/${id}`, {
-        method: "DELETE",
+        method: 'DELETE',
       });
       if (!res.ok) {
-        throw new Error("Failed to delete job");
+        throw new Error('Failed to delete job');
       }
     } catch (error) {
-      console.error("Error deleting job:", error);
-      toast.error("Failed to delete the job");
+      console.error('Error deleting job:', error);
+      toast.error('Failed to delete the job');
     }
   };
 
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const res = await fetch(`/api/jobs/${id}`);
+        const res = await fetch(`/api/jobs/${id}`, {
+          method: 'PUT',
+        });
+
         if (!res.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         const data = await res.json();
         setJob(data);
@@ -53,17 +56,15 @@ const JobPage = () => {
   }, [id]);
 
   const onDeleteClick = (jobId) => {
-    const confirm = window.confirm(
-      "Are you sure you want to delete this listing?"
-    );
+    const confirm = window.confirm('Are you sure you want to delete this listing?');
 
     if (!confirm) return;
 
     deleteJob(jobId);
 
-    toast.success("Job deleted successfully");
+    toast.success('Job deleted successfully');
 
-    navigate("/jobs");
+    navigate('/jobs');
   };
 
   if (loading) return <p>Loading...</p>;
@@ -74,10 +75,7 @@ const JobPage = () => {
     <>
       <section>
         <div className="container m-auto py-6 px-6">
-          <Link
-            to="/jobs"
-            className="text-indigo-500 hover:text-indigo-600 flex items-center"
-          >
+          <Link to="/jobs" className="text-indigo-500 hover:text-indigo-600 flex items-center">
             <FaArrowLeft className="mr-2" /> Back to Job Listings
           </Link>
         </div>
@@ -97,15 +95,11 @@ const JobPage = () => {
               </div>
 
               <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-                <h3 className="text-indigo-800 text-lg font-bold mb-6">
-                  Job Description
-                </h3>
+                <h3 className="text-indigo-800 text-lg font-bold mb-6">Job Description</h3>
 
                 <p className="mb-4">{job.description}</p>
 
-                <h3 className="text-indigo-800 text-lg font-bold mb-2">
-                  Salary
-                </h3>
+                <h3 className="text-indigo-800 text-lg font-bold mb-2">Salary</h3>
 
                 <p className="mb-4">{job.salary} / Year</p>
               </div>
@@ -124,15 +118,11 @@ const JobPage = () => {
 
                 <h3 className="text-xl">Contact Email:</h3>
 
-                <p className="my-2 bg-indigo-100 p-2 font-bold">
-                  {job.company.contactEmail}
-                </p>
+                <p className="my-2 bg-indigo-100 p-2 font-bold">{job.company.contactEmail}</p>
 
                 <h3 className="text-xl">Contact Phone:</h3>
 
-                <p className="my-2 bg-indigo-100 p-2 font-bold">
-                  {job.company.contactPhone}
-                </p>
+                <p className="my-2 bg-indigo-100 p-2 font-bold">{job.company.contactPhone}</p>
               </div>
 
               <div className="bg-white p-6 rounded-lg shadow-md mt-6">
