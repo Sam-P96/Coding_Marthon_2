@@ -10,7 +10,7 @@ const generateToken = (_id) => {
 };
 
 const signup = async(req, res) => {
-    
+try {
     const data = req.body;
 
     const user = await signupUser(data);
@@ -21,6 +21,10 @@ const signup = async(req, res) => {
     } else {
         res.status(201).json({user, token})
     }
+} catch (error) {
+    res.status(500).json(error.message)
+}
+
 };
 
 const login = async(req,res) => {
