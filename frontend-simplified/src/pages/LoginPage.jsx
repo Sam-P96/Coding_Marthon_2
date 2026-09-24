@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 
 const LoginPage = ({isAuthenticated, setIsAuthenticated}) => {
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     // THIS IS FOR SIGN UP NAV - IGNORE -
-    const signupHandler = async () => {
+    const signupHandler = () => {
         navigate("/signup")
     }
 
@@ -16,14 +16,14 @@ const LoginPage = ({isAuthenticated, setIsAuthenticated}) => {
         e.preventDefault();
         setError(null)
 
-        const respones = await fetch("/api/user/login", {
+        const response = await fetch("/api/user/login", {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
             },
             body : JSON.stringify({email, password}),
         });
-    }
+    
 
     const user = await Response.json();
 
@@ -36,7 +36,7 @@ const LoginPage = ({isAuthenticated, setIsAuthenticated}) => {
     console.log("login success, saved in local storage")
     setIsAuthenticated(true);
     navigate("/")
-
+}
     return (
         <div className="create">
             <h2>Login</h2>
@@ -57,6 +57,7 @@ const LoginPage = ({isAuthenticated, setIsAuthenticated}) => {
         </div>
     )
 
-};
+
+}
 
 export default LoginPage;

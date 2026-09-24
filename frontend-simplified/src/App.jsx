@@ -4,6 +4,7 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
+import {useState} from 'react'
 import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
 import JobsPage from "./pages/JobsPage";
@@ -15,8 +16,8 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useSate(() => {
-    const user =JSON.parse(localStorage.etItem("user"));
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const user =JSON.parse(localStorage.getItem("user"));
     return user && user.token ? true : false;
   });
 
