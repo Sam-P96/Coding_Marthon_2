@@ -41,7 +41,7 @@ const SignupPage = ({ placeholder }) => {
     if (response.ok) {
         const user = await response.json();
         localStorage.setItem("user", JSON.stringify(user));
-        console.log("User signed up successfully!");
+        console.log("User signed up successfully!", user);
         // setIsAuthenticated(true);
         navigate("/");
       } else {

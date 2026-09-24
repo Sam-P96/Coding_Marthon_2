@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 
-const LoginPage = ({isAuthenticated, setIsAuthenticated}) => {
+const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ const LoginPage = ({isAuthenticated, setIsAuthenticated}) => {
         e.preventDefault();
         setError(null)
 
-        const response = await fetch("/api/user/login", {
+        const response = await fetch("/api/users/login", {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
@@ -25,7 +25,7 @@ const LoginPage = ({isAuthenticated, setIsAuthenticated}) => {
         });
     
 
-    const user = await Response.json();
+    const user = await response.json();
 
     if (!response.ok) {
         setError(user.error);
@@ -33,8 +33,8 @@ const LoginPage = ({isAuthenticated, setIsAuthenticated}) => {
     }
 
     localStorage.setItem("user", JSON.stringify(user));
-    console.log("login success, saved in local storage")
-    setIsAuthenticated(true);
+    console.log("login success, saved in local storage", user)
+    // setIsAuthenticated(true);
     navigate("/")
 }
     return (
