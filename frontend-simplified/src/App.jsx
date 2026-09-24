@@ -16,10 +16,10 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 
 const App = () => {
-  // const [isAuthenticated, setIsAuthenticated] = useState(() => {
-  //   const user =JSON.parse(localStorage.getItem("user"));
-  //   return user && user.token ? true : false;
-  // });
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user && user.token ? true : false;
+  });
 
   const router = createBrowserRouter(
     createRoutesFromElements(
