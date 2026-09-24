@@ -11,8 +11,15 @@ import NotFoundPage from "./pages/NotFoundPage";
 import JobPage from "./pages/JobPage"; 
 import AddJobPage from "./pages/AddJobPage";
 import EditJobPage from "./pages/EditJobPage";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useSate(() => {
+    const user =JSON.parse(localStorage.etItem("user"));
+    return user && user.token ? true : false;
+  });
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<MainLayout />}>
@@ -21,6 +28,10 @@ const App = () => {
         <Route path="/add-job" element={<AddJobPage />} />
         <Route path="/edit-job/:id" element={<EditJobPage />} />
         <Route path="/jobs/:id" element={<JobPage />} />
+        <Route path="/login" element={<LoginPage 
+        setIsAuthenticated={setIsAuthenticated}/>} />
+        <Route path="/signup" element={<SignupPage
+          setIsAuthenticated = {setIsAuthenticated} />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     )
